@@ -25,6 +25,7 @@ async function run(): Promise<void> {
 		await installFromSource(dir)
 		core.debug(new Date().toTimeString())
 		core.exportVariable('PLAN9', dir)
+		core.addPath(path.join(dir, 'bin'))
 	} catch (error) {
 		core.setFailed(error.message)
 	}

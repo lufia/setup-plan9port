@@ -66,6 +66,7 @@ function run() {
             yield installFromSource(dir);
             core.debug(new Date().toTimeString());
             core.exportVariable('PLAN9', dir);
+            core.addPath(path_1.default.join(dir, 'bin'));
         }
         catch (error) {
             core.setFailed(error.message);
