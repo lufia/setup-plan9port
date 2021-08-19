@@ -3,15 +3,16 @@ import * as core from '@actions/core'
 import path from 'path'
 import cp from 'child_process'
 
-async function downloadSource(branch: string): Promise<string> {
-	const url = `https://github.com/9fans/plan9port/archive/refs/heads/${branch}.zip`;
-	const archivePath = await tc.downloadTool(url)
-	const dir = await tc.extractZip(archivePath)
-	return path.join(dir, `plan9port-${branch}`)
+const archiveUrl = 'https://storage.googleapis.com/setup-plan9port/plan9port-master.tgz'
+
+async function downloadSource(): Promise<string> {
+	const archivePath = await tc.downloadTool(archiveUrl)
+	const dir = await tc.extractTar(archivePath)
+	return path.join(dir, `plan9port-master`)
 }
 
 async function installFromSource(dir: string): Promise<void> {
-	await cp.spawn('./INSTALL', ['-r', dir], {
+	await cp.spawn('./INSTALL', ['-c', '-r', dir], {
 		cwd: dir
 	})
 }
@@ -19,7 +20,7 @@ async function installFromSource(dir: string): Promise<void> {
 async function run(): Promise<void> {
 	try {
 		core.debug(new Date().toTimeString())
-		const dir = await downloadSource("master")
+		const dir = await downloadSource()
 		core.debug(new Date().toTimeString())
 		await installFromSource(dir)
 		core.debug(new Date().toTimeString())

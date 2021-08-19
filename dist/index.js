@@ -42,17 +42,17 @@ const tc = __importStar(__nccwpck_require__(784));
 const core = __importStar(__nccwpck_require__(186));
 const path_1 = __importDefault(__nccwpck_require__(622));
 const child_process_1 = __importDefault(__nccwpck_require__(129));
-function downloadSource(branch) {
+const archiveUrl = 'https://storage.googleapis.com/setup-plan9port/plan9port-master.tgz';
+function downloadSource() {
     return __awaiter(this, void 0, void 0, function* () {
-        const url = `https://github.com/9fans/plan9port/archive/refs/heads/${branch}.zip`;
-        const archivePath = yield tc.downloadTool(url);
-        const dir = yield tc.extractZip(archivePath);
-        return path_1.default.join(dir, `plan9port-${branch}`);
+        const archivePath = yield tc.downloadTool(archiveUrl);
+        const dir = yield tc.extractTar(archivePath);
+        return path_1.default.join(dir, `plan9port-master`);
     });
 }
 function installFromSource(dir) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield child_process_1.default.spawn('./INSTALL', ['-r', dir], {
+        yield child_process_1.default.spawn('./INSTALL', ['-c', '-r', dir], {
             cwd: dir
         });
     });
@@ -61,7 +61,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug(new Date().toTimeString());
-            const dir = yield downloadSource("master");
+            const dir = yield downloadSource();
             core.debug(new Date().toTimeString());
             yield installFromSource(dir);
             core.debug(new Date().toTimeString());
