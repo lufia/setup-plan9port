@@ -51,10 +51,8 @@ function downloadSource() {
     });
 }
 function installFromSource(dir) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield child_process_1.default.spawn('./INSTALL', ['-c', '-r', dir], {
-            cwd: dir
-        });
+    child_process_1.default.spawnSync('./INSTALL', ['-c', '-r', dir], {
+        cwd: dir
     });
 }
 function run() {
@@ -63,7 +61,7 @@ function run() {
             core.debug(new Date().toTimeString());
             const dir = yield downloadSource();
             core.debug(new Date().toTimeString());
-            yield installFromSource(dir);
+            installFromSource(dir);
             core.debug(new Date().toTimeString());
             core.exportVariable('PLAN9', dir);
             core.addPath(path_1.default.join(dir, 'bin'));

@@ -11,8 +11,8 @@ async function downloadSource(): Promise<string> {
 	return path.join(dir, `plan9port-master`)
 }
 
-async function installFromSource(dir: string): Promise<void> {
-	await cp.spawn('./INSTALL', ['-c', '-r', dir], {
+function installFromSource(dir: string): void {
+	cp.spawnSync('./INSTALL', ['-c', '-r', dir], {
 		cwd: dir
 	})
 }
@@ -22,7 +22,7 @@ async function run(): Promise<void> {
 		core.debug(new Date().toTimeString())
 		const dir = await downloadSource()
 		core.debug(new Date().toTimeString())
-		await installFromSource(dir)
+		installFromSource(dir)
 		core.debug(new Date().toTimeString())
 		core.exportVariable('PLAN9', dir)
 		core.addPath(path.join(dir, 'bin'))
