@@ -1,5 +1,5 @@
-import tc from '@actions/tool-cache'
-import core from '@actions/core'
+import * as tc from '@actions/tool-cache'
+import * as core from '@actions/core'
 
 async function installFromSource(branch: string): Promise<string> {
 	const url = `https://github.com/9fans/plan9port/archive/refs/heads/${branch}.zip`;

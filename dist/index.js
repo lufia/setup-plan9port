@@ -6,6 +6,25 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -15,33 +34,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tool_cache_1 = __importDefault(__nccwpck_require__(784));
-const core_1 = __importDefault(__nccwpck_require__(186));
-const stream_1 = __nccwpck_require__(413);
-const util_1 = __nccwpck_require__(669);
-const streamPipeline = util_1.promisify(stream_1.pipeline);
+const tc = __importStar(__nccwpck_require__(784));
+const core = __importStar(__nccwpck_require__(186));
 function installFromSource(branch) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://github.com/9fans/plan9port/archive/refs/heads/${branch}.zip`;
-        const archivePath = yield tool_cache_1.default.downloadTool(url);
-        return yield tool_cache_1.default.extractZip(archivePath);
+        const archivePath = yield tc.downloadTool(url);
+        return yield tc.extractZip(archivePath);
     });
 }
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            core_1.default.debug(new Date().toTimeString());
+            core.debug(new Date().toTimeString());
             const dir = yield installFromSource("master");
-            core_1.default.debug(new Date().toTimeString());
-            core_1.default.exportVariable('PLAN9', dir);
-            core_1.default.setOutput('time', new Date().toTimeString());
+            core.debug(new Date().toTimeString());
+            core.exportVariable('PLAN9', dir);
+            core.setOutput('time', new Date().toTimeString());
         }
         catch (error) {
-            core_1.default.setFailed(error.message);
+            core.setFailed(error.message);
         }
     });
 }
