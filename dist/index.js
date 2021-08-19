@@ -34,24 +34,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const tc = __importStar(__nccwpck_require__(784));
 const core = __importStar(__nccwpck_require__(186));
-function installFromSource(branch) {
+const path_1 = __importDefault(__nccwpck_require__(622));
+const child_process_1 = __importDefault(__nccwpck_require__(129));
+function downloadSource(branch) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://github.com/9fans/plan9port/archive/refs/heads/${branch}.zip`;
         const archivePath = yield tc.downloadTool(url);
-        return yield tc.extractZip(archivePath);
+        const dir = yield tc.extractZip(archivePath);
+        return path_1.default.join(dir, `plan9port-${branch}`);
+    });
+}
+function installFromSource(dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield child_process_1.default.spawn('./INSTALL', ['-r', dir], {
+            cwd: dir
+        });
     });
 }
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug(new Date().toTimeString());
-            const dir = yield installFromSource("master");
+            const dir = yield downloadSource("master");
+            core.debug(new Date().toTimeString());
+            yield installFromSource(dir);
             core.debug(new Date().toTimeString());
             core.exportVariable('PLAN9', dir);
-            core.setOutput('time', new Date().toTimeString());
         }
         catch (error) {
             core.setFailed(error.message);
