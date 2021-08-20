@@ -1,0 +1,25 @@
+name: 'build-images'
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: ['ubuntu-20.04', 'ubuntu-18.04']
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: '9fans/plan9port'
+    #- run: |
+    #    ./INSTALL -b
+    - name: Archive
+      run: |
+        # ignore .git, .github and other hidden files.
+        tar -zcf "plan9port-${{ matrix.os }}.tgz" *
+    - uses: google-github-actions/upload-cloud-storage@main
+      with:
+        path: plan9port-${{ matrix.os }}.tgz
+        destination: setup-plan9port
+        credentials: ${{ secrets.GCP_CREDENTIAL }}
