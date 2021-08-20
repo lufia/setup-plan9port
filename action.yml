@@ -1,6 +1,10 @@
 name: 'Setup plan9port'
 description: 'Setup a plan9port environment'
 author: 'Kyohei, KADOTA'
+inputs:
+  environment:
+    description: 'The workflow label: ubuntu-20.04 or ubuntu-18.04'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

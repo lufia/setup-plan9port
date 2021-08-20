@@ -41,13 +41,15 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const tc = __importStar(__nccwpck_require__(784));
 const core = __importStar(__nccwpck_require__(186));
 const path_1 = __importDefault(__nccwpck_require__(622));
+const os = __importStar(__nccwpck_require__(87));
+const fs_1 = __nccwpck_require__(747);
 const child_process_1 = __importDefault(__nccwpck_require__(129));
-const archiveUrl = 'https://storage.googleapis.com/setup-plan9port/plan9port-master.tgz';
-function downloadSource() {
+function downloadSource(label) {
     return __awaiter(this, void 0, void 0, function* () {
+        const archiveUrl = `https://storage.googleapis.com/setup-plan9port/plan9port-${label}.tgz`;
         const archivePath = yield tc.downloadTool(archiveUrl);
         const dir = yield tc.extractTar(archivePath);
-        return path_1.default.join(dir, `plan9port-master`);
+        return path_1.default.join(dir, 'plan9');
     });
 }
 function installFromSource(dir) {
@@ -55,16 +57,27 @@ function installFromSource(dir) {
         cwd: dir
     });
 }
+function appendPath(dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        process.env['PATH'] = `${process.env['PATH']}${path_1.default.delimiter}${dir}`;
+        const filePath = process.env['GITHUB_PATH'] || '';
+        if (filePath) {
+            const data = process.env['PATH'].split(path_1.default.delimiter).join(os.EOL);
+            yield fs_1.promises.writeFile(filePath, data);
+        }
+    });
+}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
+        const label = core.getInput('environment');
         try {
             core.debug(new Date().toTimeString());
-            const dir = yield downloadSource();
+            const dir = yield downloadSource(label);
             core.debug(new Date().toTimeString());
             installFromSource(dir);
             core.debug(new Date().toTimeString());
             core.exportVariable('PLAN9', dir);
-            core.addPath(path_1.default.join(dir, 'bin'));
+            yield appendPath(path_1.default.join(dir, 'bin'));
         }
         catch (error) {
             core.setFailed(error.message);
