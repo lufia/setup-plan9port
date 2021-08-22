@@ -18,11 +18,15 @@ function installFromSource(dir: string): void {
 	})
 }
 
+// appendPath adds dir to the end of the PATH.
+// It similer to core.addPath except addPath adds to the top of the PATH.
 async function appendPath(dir: string): Promise<void> {
 	process.env['PATH'] = `${process.env['PATH']}${path.delimiter}${dir}`
 	const filePath = process.env['GITHUB_PATH'] || ''
 	if(filePath){
-		const data = process.env['PATH'].split(path.delimiter).join(os.EOL)
+		const a = process.env['PATH'].split(path.delimiter)
+		a.reverse()
+		const data = a.join(os.EOL)
 		await fs.writeFile(filePath, data)
 	}
 }

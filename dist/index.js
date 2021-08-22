@@ -57,12 +57,16 @@ function installFromSource(dir) {
         cwd: dir
     });
 }
+// appendPath adds dir to the end of the PATH.
+// It similer to core.addPath except addPath adds to the top of the PATH.
 function appendPath(dir) {
     return __awaiter(this, void 0, void 0, function* () {
         process.env['PATH'] = `${process.env['PATH']}${path_1.default.delimiter}${dir}`;
         const filePath = process.env['GITHUB_PATH'] || '';
         if (filePath) {
-            const data = process.env['PATH'].split(path_1.default.delimiter).join(os.EOL);
+            const a = process.env['PATH'].split(path_1.default.delimiter);
+            a.reverse();
+            const data = a.join(os.EOL);
             yield fs_1.promises.writeFile(filePath, data);
         }
     });
