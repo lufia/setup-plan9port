@@ -41,8 +41,11 @@ async function run(): Promise<void> {
 		core.debug(new Date().toTimeString())
 		core.exportVariable('PLAN9', dir)
 		await appendPath(path.join(dir, 'bin'))
-	} catch (error) {
-		core.setFailed(error.message)
+	} catch (e: unknown) {
+		if (e instanceof Error)
+			core.setFailed(e.message)
+		else
+			core.setFailed('failed to install plan9port')
 	}
 }
 
