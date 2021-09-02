@@ -23,7 +23,7 @@ function installFromSource(dir: string): void {
 async function appendPath(dir: string): Promise<void> {
 	process.env['PATH'] = `${process.env['PATH']}${path.delimiter}${dir}`
 	const filePath = process.env['GITHUB_PATH'] || ''
-	if(filePath){
+	if (filePath) {
 		const a = process.env['PATH'].split(path.delimiter)
 		a.reverse()
 		const data = a.join(os.EOL)
