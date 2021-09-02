@@ -1,9 +1,9 @@
-import * as tc from '@actions/tool-cache'
 import * as core from '@actions/core'
-import path from 'path'
 import * as os from 'os'
-import { promises as fs } from 'fs'
+import * as tc from '@actions/tool-cache'
 import cp from 'child_process'
+import { promises as fs } from 'fs'
+import path from 'path'
 
 async function downloadSource(label: string): Promise<string> {
 	const archiveUrl = `https://storage.googleapis.com/setup-plan9port/plan9port-${label}.tgz`
@@ -42,10 +42,11 @@ async function run(): Promise<void> {
 		core.exportVariable('PLAN9', dir)
 		await appendPath(path.join(dir, 'bin'))
 	} catch (e: unknown) {
-		if (e instanceof Error)
+		if (e instanceof Error) {
 			core.setFailed(e.message)
-		else
+		} else {
 			core.setFailed('failed to install plan9port')
+		}
 	}
 }
 
