@@ -26,12 +26,10 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.5.0",
-    "@actions/tool-cache": "^1.7.1",
-    "node-fetch": "^2.6.1"
+    "@actions/tool-cache": "^1.7.1"
   },
   "devDependencies": {
     "@types/node": "^16.7.7",
-    "@types/node-fetch": "^2.5.12",
     "@typescript-eslint/parser": "^4.30.0",
     "@vercel/ncc": "^0.30.0",
     "eslint": "^7.32.0",
