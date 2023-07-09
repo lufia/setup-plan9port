@@ -4,6 +4,16 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    groups:
+      eslint:
+        patterns:
+          - 'eslint'
+          - 'eslint-plugin-*'
+          - '@typescript-eslint/parser'
+      jest:
+        patterns:
+          - 'jest'
+          - 'ts-jest'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
