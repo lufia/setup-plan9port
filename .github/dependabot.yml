@@ -1,10 +1,21 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/'
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: 'weekly'
+      interval: weekly
     groups:
+      security-fix:
+        applies-to: security-updates
+        patterns:
+          - '*'
+      minors:
+        applies-to: version-updates
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
       eslint:
         patterns:
           - 'eslint'
@@ -16,7 +27,7 @@ updates:
         patterns:
           - 'jest'
           - 'ts-jest'
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: 'weekly'
+      interval: weekly
