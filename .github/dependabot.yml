@@ -2,6 +2,9 @@ version: 2
 updates:
   - package-ecosystem: npm
     directory: /
+    labels:
+      - dependabot
+      - npm
     schedule:
       interval: weekly
     groups:
@@ -29,5 +32,8 @@ updates:
           - 'ts-jest'
   - package-ecosystem: github-actions
     directory: /
+    labels:
+      - dependabot
+      - actions
     schedule:
       interval: weekly
