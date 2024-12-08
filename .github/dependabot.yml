@@ -23,9 +23,11 @@ updates:
         patterns:
           - 'eslint'
           - 'eslint-plugin-*'
+          - '@eslint/js'
           - '@typescript-eslint/parser'
           - '@typescript-eslint/eslint-plugin'
           - 'prettier'
+          - 'globals'
       jest:
         patterns:
           - 'jest'
