@@ -1,4 +1,5 @@
-import core from '@actions/core'
+// eslint-disable-next-line importPlugin/no-namespace
+import * as core from '@actions/core'
 import os from 'os'
 import tc from '@actions/tool-cache'
 import cp from 'child_process'
@@ -31,7 +32,7 @@ async function appendPath(dir: string): Promise<void> {
 	}
 }
 
-async function run(): Promise<void> {
+export async function run(): Promise<void> {
 	const label = core.getInput('environment')
 	try {
 		core.debug(new Date().toTimeString())

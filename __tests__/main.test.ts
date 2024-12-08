@@ -1,15 +1,30 @@
-import * as process from 'process'
-import * as cp from 'child_process'
-import * as path from 'path'
-import { expect, test } from '@jest/globals'
+import * as core from '@actions/core'
+import { run } from '../src/main'
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-	process.env['INPUT_ENVIRONMENT'] = 'ubuntu-latest'
-	const np = process.execPath
-	const ip = path.join(__dirname, '..', 'lib', 'main.js')
-	const options: cp.ExecFileSyncOptions = {
-		env: process.env
-	}
-	console.log(cp.execFileSync(np, [ip], options).toString())
+let debugMock: jest.SpiedFunction<typeof core.debug>
+let getInputMock: jest.SpiedFunction<typeof core.getInput>
+let setFailedMock: jest.SpiedFunction<typeof core.setFailed>
+let exportVariableMock: jest.SpiedFunction<typeof core.exportVariable>
+
+describe('action', () => {
+	beforeEach(() => {
+		jest.clearAllMocks()
+		debugMock = jest.spyOn(core, 'debug').mockImplementation()
+		getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
+		getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
+		exportVariableMock = jest.spyOn(core, 'exportVariable').mockImplementation()
+	})
+
+	it('test runs', async () => {
+		getInputMock.mockImplementation(name => {
+			switch (name) {
+			case 'environment':
+				return 'ubuntu-latest'
+			default:
+				return ''
+			}
+		})
+		await run()
+		expect(getInputMock).toHaveBeenCalledWith('environment')
+	})
 })
