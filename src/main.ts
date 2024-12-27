@@ -1,15 +1,15 @@
 // eslint-disable-next-line importPlugin/no-namespace
 import * as core from '@actions/core'
 import os from 'os'
-import tc from '@actions/tool-cache'
+import { downloadTool, extractTar } from '@actions/tool-cache'
 import cp from 'child_process'
 import { promises as fs } from 'fs'
 import path from 'path'
 
 async function downloadSource(label: string): Promise<string> {
 	const archiveUrl = `https://storage.googleapis.com/setup-plan9port/plan9port-${label}.tgz`
-	const archivePath = await tc.downloadTool(archiveUrl)
-	const dir = await tc.extractTar(archivePath)
+	const archivePath = await downloadTool(archiveUrl)
+	const dir = await extractTar(archivePath)
 	return path.join(dir, 'plan9')
 }
 
