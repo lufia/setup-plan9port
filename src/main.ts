@@ -1,5 +1,4 @@
-// eslint-disable-next-line importPlugin/no-namespace
-import * as core from '@actions/core'
+import { debug, exportVariable, getInput, setFailed } from '@actions/core'
 import os from 'os'
 import { downloadTool, extractTar } from '@actions/tool-cache'
 import cp from 'child_process'
@@ -33,20 +32,20 @@ async function appendPath(dir: string): Promise<void> {
 }
 
 export async function run(): Promise<void> {
-	const label = core.getInput('environment')
+	const label = getInput('environment')
 	try {
-		core.debug(new Date().toTimeString())
+		debug(new Date().toTimeString())
 		const dir = await downloadSource(label)
-		core.debug(new Date().toTimeString())
+		debug(new Date().toTimeString())
 		installFromSource(dir)
-		core.debug(new Date().toTimeString())
-		core.exportVariable('PLAN9', dir)
+		debug(new Date().toTimeString())
+		exportVariable('PLAN9', dir)
 		await appendPath(path.join(dir, 'bin'))
 	} catch (e: unknown) {
 		if (e instanceof Error) {
-			core.setFailed(e.message)
+			setFailed(e.message)
 		} else {
-			core.setFailed('failed to install plan9port')
+			setFailed('failed to install plan9port')
 		}
 	}
 }
