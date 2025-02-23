@@ -12,16 +12,18 @@ describe('action', () => {
 		debugMock = jest.spyOn(core, 'debug').mockImplementation()
 		getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
 		getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
-		exportVariableMock = jest.spyOn(core, 'exportVariable').mockImplementation()
+		exportVariableMock = jest
+			.spyOn(core, 'exportVariable')
+			.mockImplementation()
 	})
 
 	it('test runs', async () => {
 		getInputMock.mockImplementation(name => {
 			switch (name) {
-			case 'environment':
-				return 'ubuntu-latest'
-			default:
-				return ''
+				case 'environment':
+					return 'ubuntu-latest'
+				default:
+					return ''
 			}
 		})
 		await run()
