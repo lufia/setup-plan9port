@@ -35,6 +35,7 @@ export default tseslint.config({
         "eslint-comments/no-unused-disable": "off",
         "i18n-text/no-en": "off",
         "import/no-namespace": "off",
+        "import/no-unresolved": "off",
         "no-console": "off",
         semi: "off",
         "@typescript-eslint/array-type": "error",

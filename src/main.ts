@@ -5,9 +5,20 @@ import cp from 'child_process'
 import { promises as fs } from 'fs'
 import path from 'path'
 
-async function downloadSource(label: string): Promise<string> {
+type RunOptions = Readonly<{
+	downloadTool: typeof downloadTool
+}>
+
+export const defaultOptions: RunOptions = {
+	downloadTool
+}
+
+async function downloadSource(
+	label: string,
+	options: RunOptions
+): Promise<string> {
 	const archiveUrl = `https://storage.googleapis.com/setup-plan9port/plan9port-${label}.tgz`
-	const archivePath = await downloadTool(archiveUrl)
+	const archivePath = await options.downloadTool(archiveUrl)
 	const dir = await extractTar(archivePath)
 	return path.join(dir, 'plan9')
 }
@@ -31,11 +42,11 @@ async function appendPath(dir: string): Promise<void> {
 	}
 }
 
-export async function run(): Promise<void> {
+export async function run(options: RunOptions): Promise<void> {
 	const label = getInput('environment')
 	try {
 		debug(new Date().toTimeString())
-		const dir = await downloadSource(label)
+		const dir = await downloadSource(label, options)
 		debug(new Date().toTimeString())
 		installFromSource(dir)
 		debug(new Date().toTimeString())
@@ -49,5 +60,3 @@ export async function run(): Promise<void> {
 		}
 	}
 }
-
-run()
