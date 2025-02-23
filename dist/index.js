@@ -19,6 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.defaultOptions = void 0;
 exports.run = run;
 const core_1 = __nccwpck_require__(7484);
 const os_1 = __importDefault(__nccwpck_require__(857));
@@ -26,10 +27,13 @@ const tool_cache_1 = __nccwpck_require__(3472);
 const child_process_1 = __importDefault(__nccwpck_require__(5317));
 const fs_1 = __nccwpck_require__(9896);
 const path_1 = __importDefault(__nccwpck_require__(6928));
-function downloadSource(label) {
+exports.defaultOptions = {
+    downloadTool: tool_cache_1.downloadTool
+};
+function downloadSource(label, options) {
     return __awaiter(this, void 0, void 0, function* () {
         const archiveUrl = `https://storage.googleapis.com/setup-plan9port/plan9port-${label}.tgz`;
-        const archivePath = yield (0, tool_cache_1.downloadTool)(archiveUrl);
+        const archivePath = yield options.downloadTool(archiveUrl);
         const dir = yield (0, tool_cache_1.extractTar)(archivePath);
         return path_1.default.join(dir, 'plan9');
     });
@@ -53,12 +57,12 @@ function appendPath(dir) {
         }
     });
 }
-function run() {
+function run(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const label = (0, core_1.getInput)('environment');
         try {
             (0, core_1.debug)(new Date().toTimeString());
-            const dir = yield downloadSource(label);
+            const dir = yield downloadSource(label, options);
             (0, core_1.debug)(new Date().toTimeString());
             installFromSource(dir);
             (0, core_1.debug)(new Date().toTimeString());
@@ -75,7 +79,6 @@ function run() {
         }
     });
 }
-run();
 
 
 /***/ }),
@@ -30186,13 +30189,19 @@ module.exports = parseParams
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(5915);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const main_js_1 = __nccwpck_require__(5915);
+(0, main_js_1.run)(main_js_1.defaultOptions);
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
