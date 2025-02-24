@@ -16,7 +16,7 @@ jobs:
     - name: Build
       run: |
         sudo apt-get update
-        sudo apt-get install libx11-dev
+        sudo apt-get install libx11-dev libxt-dev
         cd plan9 && ./INSTALL -b
     - name: Archive
       run: |
