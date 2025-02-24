@@ -1,33 +1,45 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
-import pluginJest from "eslint-plugin-jest";
-import github from "eslint-plugin-github";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import jest from "eslint-plugin-jest";
 import globals from "globals";
 
-export default tseslint.config({
-    ignores: ["**/dist/", "**/lib/", "**/node_modules/", "**/jest.config.js"],
+export default tseslint.config(
+{
+    ignores: ["**/dist", "**/node_modules"],
+},
+{
     extends: [
         eslint.configs.recommended,
         ...tseslint.configs.recommended,
-        github.getFlatConfigs().recommended,
-        github.getFlatConfigs().typescript,
     ],
     plugins: {
-        jest: pluginJest
+        jest,
+        "@typescript-eslint": typescriptEslint
     },
     languageOptions: {
         globals: {
             ...globals.node,
             ...globals.jest,
-            ...pluginJest.environments.globals.globals,
             Atomics: "readonly",
             SharedArrayBuffer: "readonly",
         },
-        ecmaVersion: 9,
+        parser: tsParser,
+        ecmaVersion: 2023,
         sourceType: "module",
         parserOptions: {
-            project: "./tsconfig.json",
+            project: ["./tsconfig.eslint.json"],
+            tsconfigRootDir: "."
         },
+    },
+    settings: {
+        "import/resolver": {
+            typescript: {
+                alwaysTryTypes: true,
+                project: "tsconfig.eslint.json"
+            }
+        }
     },
     rules: {
         camelcase: "off",
@@ -35,7 +47,6 @@ export default tseslint.config({
         "eslint-comments/no-unused-disable": "off",
         "i18n-text/no-en": "off",
         "import/no-namespace": "off",
-        "import/no-unresolved": "off",
         "no-console": "off",
         semi: "off",
         "@typescript-eslint/array-type": "error",

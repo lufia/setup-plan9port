@@ -1,3 +1,3 @@
-import { run, defaultOptions } from './main.js'
+import { run } from './main.js'
 
-run(defaultOptions)
+run()

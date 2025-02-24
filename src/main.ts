@@ -15,10 +15,10 @@ export const defaultOptions: RunOptions = {
 
 async function downloadSource(
 	label: string,
-	options: RunOptions
+	opts: RunOptions
 ): Promise<string> {
 	const archiveUrl = `https://storage.googleapis.com/setup-plan9port/plan9port-${label}.tgz`
-	const archivePath = await options.downloadTool(archiveUrl)
+	const archivePath = await opts.downloadTool(archiveUrl)
 	const dir = await extractTar(archivePath)
 	return path.join(dir, 'plan9')
 }
@@ -42,18 +42,27 @@ async function appendPath(dir: string): Promise<void> {
 	}
 }
 
-export async function run(options: RunOptions): Promise<void> {
+type AnyError = Readonly<{
+	message: string
+}>
+
+function isAnyError(e: unknown): e is AnyError {
+	return (typeof e === 'object' && e !== null && 'message' in e && typeof e.message === 'string')
+}
+
+export async function run(options?: RunOptions): Promise<void> {
+	const opts = options || defaultOptions
 	const label = getInput('environment')
 	try {
 		debug(new Date().toTimeString())
-		const dir = await downloadSource(label, options)
+		const dir = await downloadSource(label, opts)
 		debug(new Date().toTimeString())
 		installFromSource(dir)
 		debug(new Date().toTimeString())
 		exportVariable('PLAN9', dir)
 		await appendPath(path.join(dir, 'bin'))
 	} catch (e: unknown) {
-		if (e instanceof Error) {
+		if (isAnyError(e)) {
 			setFailed(e.message)
 		} else {
 			setFailed('failed to install plan9port')

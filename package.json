@@ -2,19 +2,20 @@
   "name": "typescript-action",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "description": "TypeScript template action",
-  "main": "lib/index.js",
   "exports": {
     ".": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "lint": "eslint src/**/*.ts",
-    "package": "ncc build --source-map --license licenses.txt",
-    "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "bundle": "npm run format:write && npm run package",
+    "format:write": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "lint": "npx eslint .",
+    "local-action": "npx @github/local-action run . src/main.ts env.local",
+    "package": "npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
+    "all": "npm run format:write && npm run lint && npm run test && npm run package"
   },
   "repository": {
     "type": "git",
@@ -22,31 +23,37 @@
   },
   "keywords": [
     "actions",
-    "node",
     "setup"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@actions/exec": "^1.1.1",
-    "@actions/tool-cache": "^2.0.1",
-    "@jest/globals": "^29.7.0"
+    "@actions/tool-cache": "^2.0.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
+    "@actions/exec": "^1.1.1",
+    "@github/local-action": "^2.6.3",
+    "@jest/globals": "^29.7.0",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
-    "@vercel/ncc": "^0.38.3",
     "eslint": "^9.17.0",
-    "eslint-plugin-github": "^5.1.1",
+    "eslint-import-resolver-typescript": "^3.8.3",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.9.0",
     "globals": "^15.13.0",
     "js-yaml": "^4.1.0",
     "prettier": "^3.3.3",
+    "rollup": "^4.34.8",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.7.2"
+    "ts-jest-resolver": "^2.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.24.1"
   }
 }
