@@ -18,7 +18,9 @@ jobs:
         cd plan9 && ./INSTALL -b
     - name: Archive
       run: |
-        tar -zcf "plan9port-${{ matrix.os }}.tgz" --exclude='.git*' --exclude='.travis.yml' plan9
+        tar -zcf "plan9port-$OS.tgz" --exclude='.git*' plan9
+      env:
+        OS: ${{ matrix.os }}
     - uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCP_CREDENTIAL }}
