@@ -16,7 +16,7 @@ jobs:
     - name: Build
       run: |
         sudo apt-get update
-        sudo apt-get install libx11-dev libxt-dev libfontconfig1-dev
+        sudo apt-get install xorg-dev xserver-xorg-dev
         cd plan9 && ./INSTALL -b
     - name: Archive
       run: |
