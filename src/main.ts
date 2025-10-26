@@ -47,7 +47,12 @@ type AnyError = Readonly<{
 }>
 
 function isAnyError(e: unknown): e is AnyError {
-	return (typeof e === 'object' && e !== null && 'message' in e && typeof e.message === 'string')
+	return (
+		typeof e === 'object' &&
+		e !== null &&
+		'message' in e &&
+		typeof e.message === 'string'
+	)
 }
 
 export async function run(options?: RunOptions): Promise<void> {
