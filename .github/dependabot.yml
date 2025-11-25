@@ -23,6 +23,7 @@ updates:
         patterns:
           - 'eslint'
           - 'eslint-plugin-*'
+          - 'typescript-eslint'
           - '@eslint/js'
           - '@typescript-eslint/parser'
           - '@typescript-eslint/eslint-plugin'
@@ -32,6 +33,9 @@ updates:
         patterns:
           - 'jest'
           - 'ts-jest'
+          - 'ts-jest-resolver'
+          - '@jest/globals'
+          - '@types/jest'
   - package-ecosystem: github-actions
     directory: /
     labels:
