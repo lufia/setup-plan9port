@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@actions/exec": "^3.0.0",
+    "@eslint/js": "^9.39.4",
     "@github/local-action": "^7.0.1",
     "@jest/globals": "^30.4.1",
     "@rollup/plugin-commonjs": "^29.0.2",
