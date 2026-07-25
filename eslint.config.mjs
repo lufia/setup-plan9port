@@ -2,7 +2,7 @@ import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import typescriptEslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
-import jest from 'eslint-plugin-jest'
+import vitestGlobals from 'eslint-plugin-vitest-globals'
 import globals from 'globals'
 
 export default tseslint.config(
@@ -12,13 +12,13 @@ export default tseslint.config(
 	{
 		extends: [eslint.configs.recommended, ...tseslint.configs.recommended],
 		plugins: {
-			jest,
+			'vitest-globals': vitestGlobals,
 			'@typescript-eslint': typescriptEslint
 		},
 		languageOptions: {
 			globals: {
 				...globals.node,
-				...globals.jest,
+				...globals.vitest,
 				Atomics: 'readonly',
 				SharedArrayBuffer: 'readonly'
 			},

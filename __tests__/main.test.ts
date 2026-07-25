@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals'
+import { describe, expect, it, vi } from 'vitest'
 import { exec } from '@actions/exec'
 import { run } from '../src/main.js'
 import { dirname } from 'node:path'
@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 
 describe('action', () => {
 	it('test runs', async () => {
-		const downloadTool = jest.fn(async () => {
+		const downloadTool = vi.fn(async () => {
 			const dir = dirname(fileURLToPath(import.meta.url))
 			const file = 'mock.tar.gz'
 			await exec('tar', ['-C', dir, '-zcf', file, 'plan9'])
