@@ -1,49 +1,49 @@
 {
-	"name": "typescript-action",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"description": "TypeScript template action",
-	"exports": {
-		".": "./dist/index.js"
-	},
-	"scripts": {
-		"bundle": "npm run format:write && npm run package",
-		"format:write": "oxfmt --write .",
-		"format:check": "oxfmt --check .",
-		"lint": "oxlint .",
-		"local-action": "npx @github/local-action run . src/main.ts env.local",
-		"package": "npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
-		"test": "vitest run",
-		"all": "npm run format:write && npm run lint && npm run test && npm run package"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/actions/typescript-action.git"
-	},
-	"keywords": [
-		"actions",
-		"setup"
-	],
-	"author": "",
-	"license": "MIT",
-	"dependencies": {
-		"@actions/core": "^3.0.1",
-		"@actions/tool-cache": "^4.0.0"
-	},
-	"devDependencies": {
-		"@actions/exec": "^3.0.0",
-		"@github/local-action": "^7.0.1",
-		"@rollup/plugin-commonjs": "^29.0.3",
-		"@rollup/plugin-node-resolve": "^16.0.3",
-		"@rollup/plugin-typescript": "^12.1.4",
-		"@types/node": "^26.1.1",
-		"js-yaml": "^5.2.2",
-		"oxfmt": "^0.60.0",
-		"oxlint": "^1.74.0",
-		"rollup": "^4.62.2",
-		"ts-node": "^10.9.2",
-		"typescript": "^6.0.3",
-		"vitest": "^4.1.10"
-	}
+  "name": "typescript-action",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "TypeScript template action",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "bundle": "npm run format:write && npm run package",
+    "format:write": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint .",
+    "local-action": "npx @github/local-action run . src/main.ts env.local",
+    "package": "npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "test": "vitest run",
+    "all": "npm run format:write && npm run lint && npm run test && npm run package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actions/typescript-action.git"
+  },
+  "keywords": [
+    "actions",
+    "setup"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^3.0.1",
+    "@actions/tool-cache": "^4.0.0"
+  },
+  "devDependencies": {
+    "@actions/exec": "^3.0.0",
+    "@github/local-action": "^7.0.1",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@types/node": "^26.1.1",
+    "js-yaml": "^5.2.2",
+    "oxfmt": "^0.60.0",
+    "oxlint": "^1.74.0",
+    "rollup": "^4.62.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  }
 }
