@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "ignorePatterns": ["dist"],
+  "rules": {
+    "camelcase": "off",
+    "no-console": "off",
+    "semi": "off",
+    "typescript/array-type": "error",
+    "typescript/consistent-type-assertions": "error",
+    "typescript/explicit-member-accessibility": [
+      "error",
+      {
+        "accessibility": "no-public"
+      }
+    ],
+    "typescript/no-empty-interface": "error",
+    "typescript/no-extraneous-class": "error",
+    "typescript/no-inferrable-types": "error",
+    "typescript/no-non-null-assertion": "warn",
+    "typescript/no-useless-constructor": "error",
+    "typescript/prefer-function-type": "warn"
+  }
+}
