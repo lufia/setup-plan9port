@@ -29,13 +29,10 @@ updates:
           - '@typescript-eslint/eslint-plugin'
           - 'prettier'
           - 'globals'
-      jest:
+      vitest:
         patterns:
-          - 'jest'
-          - 'ts-jest'
-          - 'ts-jest-resolver'
-          - '@jest/globals'
-          - '@types/jest'
+          - 'vitest'
+          - 'eslint-plugin-vitest-globals'
   - package-ecosystem: github-actions
     directory: /
     labels:
