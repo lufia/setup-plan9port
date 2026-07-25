@@ -2,9 +2,9 @@ name: 'Setup plan9port'
 description: 'Setup a plan9port environment'
 author: 'Kyohei, KADOTA'
 inputs:
-  environment:
-    description: 'The workflow label: ubuntu-latest, ubuntu-24.04, ubuntu-22.04 or ubuntu-20.04'
-    required: true
+    environment:
+        description: 'The workflow label: ubuntu-latest, ubuntu-24.04, ubuntu-22.04 or ubuntu-20.04'
+        required: true
 runs:
-  using: node24
-  main: dist/index.js
+    using: node24
+    main: dist/index.js
