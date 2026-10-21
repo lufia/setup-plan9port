@@ -12,7 +12,6 @@
     "format:write": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "lint": "oxlint .",
-    "local-action": "npx @github/local-action run . src/main.ts env.local",
     "package": "npx rolldown --config rolldown.config.ts",
     "test": "vitest run",
     "all": "npm run format:write && npm run lint && npm run test && npm run package"
@@ -33,7 +32,6 @@
   },
   "devDependencies": {
     "@actions/exec": "^3.0.0",
-    "@github/local-action": "^7.0.1",
     "@types/node": "^26.6.2",
     "js-yaml": "^5.4.2",
     "oxfmt": "^0.70.0",
