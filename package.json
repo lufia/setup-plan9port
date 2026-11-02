@@ -33,12 +33,12 @@
   "devDependencies": {
     "@actions/exec": "^3.0.0",
     "@types/node": "^26.6.2",
-    "js-yaml": "^5.4.2",
-    "oxfmt": "^0.70.0",
-    "oxlint": "^1.85.0",
-    "rolldown": "^1.2.11",
+    "js-yaml": "^5.5.0",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
+    "rolldown": "^1.2.15",
     "ts-node": "^10.9.2",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.5"
   }
 }
